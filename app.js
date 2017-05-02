@@ -137,7 +137,6 @@ app.post('/appsource/:id', function (req, res) {
 });
 
 app.post('/appcontrol/:id', bodyParser.text({type: '*/*'}), function (req, res) {
-  myapp = "Radium";
   script = "tell application \"" + req.params.id + "\" to " + req.body + "\n";
   applescript.execString(script, function(error, result) {
     if (error) {
