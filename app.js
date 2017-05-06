@@ -19,7 +19,7 @@ app.get('/speakers', function(req, res){
   "  copy nm to the end of thisSpeaker\n" +
   "  set spkId to id of currentSpeaker\n" +
   "  copy spkId to the end of thisSpeaker\n" +
-  "  set AppleScript's text item delimiters to \",\"\n" +
+  "  set AppleScript's text item delimiters to \";\"\n" +
   "  set speakerText to thisSpeaker as text\n" +
   "  set AppleScript's text item delimiters to \"\"\n" +
   "  copy speakerText to the end of allSpeakers\n" +
@@ -37,8 +37,8 @@ app.get('/speakers', function(req, res){
       var speakers = [];
       var speakerText = result.split("|");
       speakerText.map(function(s) {
-        var t = s.split(",");
-        speakers.push({ connected: t[0], volume: parseFloat(t[1]), name: t[2], id: t[3] });
+        var t = s.split(";");
+        speakers.push({ connected: t[0], volume: parseFloat(t[1].replace(",", ".")), name: t[2], id: t[3] });
       });
       res.json(speakers);
     }
