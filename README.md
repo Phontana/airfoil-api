@@ -1,6 +1,6 @@
 # Airfoil API
 
-Wrap Airfoil's Applescript interface with a JSON API.
+Wrap Airfoil's Applescript interface with a JSON API. This version is edited to work on Dutch localized machines.
 
 ### Setup
 
