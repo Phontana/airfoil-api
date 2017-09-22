@@ -50,4 +50,4 @@ $ curl -X POST http://localhost:8080/speakers/F0D1A90B2769@loft-bathroom/disconn
 $ curl -X POST --data '0.75' http://localhost:8080/speakers/F0D1A90B2769@loft-bathroom/volume
 {"id":"F0D1A90B2769@loft-bathroom","volume":0.75}
 $ curl -X POST --data '0.76' http://localhost:8080/speakers/F0D1A90B2769@loft-bathroom/volume
-{"id":"F0D1A90B2769@loft-bathroom","volume":0.759999990463}
+{"id":"F0D1A90B2769@loft-bathroom","volume":0.759999990463}```
