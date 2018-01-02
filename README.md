@@ -1,13 +1,43 @@
 # Airfoil API
 
-Wrap Airfoil's Applescript interface with a JSON API.
+Wrap Airfoil's Applescript interface with a JSON API. This version is edited to work on Dutch localized machines.
 
 ### Setup
 
-Then:
+1. Install NodeJS
+2. Clone this repo
+3. `cd` into the application folder
+4. To run the application, type:
 
-    npm install
-    npm run start
+`npm run start`
+    
+or:
+ 
+`node /PATH/TO/APPLICATION/FOLDER/app.js`
+
+### Installation
+
+Usage of the Mac's LaunchAgent is recommended to keep the NodeJS server running. Create the following file in a text editor of choice and place it in `~/Library/LaunchAgents` and name it: `com.phontana.airfoilapi.plist`. 
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.phontana.airfoilapi</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/bin/node</string>
+		<string>/PATH/TO/APPLICATION/FOLDER/app.js</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
+```
+
+With every reboot or new login the NodeJS server will start the `airfoil-api` application
 
 ### Usage
 
@@ -21,9 +51,3 @@ Then:
     {"id":"F0D1A90B2769@loft-bathroom","volume":0.75}
     $ curl -X POST --data '0.76' http://localhost:8080/speakers/F0D1A90B2769@loft-bathroom/volume
     {"id":"F0D1A90B2769@loft-bathroom","volume":0.759999990463}
-    $ curl -X POST http://localhost:8080/source/Built-in%20Digital%20Input
-    {"id":"Built-in Digital Input"}
-    $ curl -X POST http://localhost:8080/appsource/Radium
-    {"id":"Radium"}
-    $ curl -X POST --data 'stop' http://localhost:8080/appcontrol/Radium
-    {"id":"Radium"}
