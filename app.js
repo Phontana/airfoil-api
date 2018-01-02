@@ -43,7 +43,52 @@ app.get('/speakers', function(req, res){
       res.json(speakers);
     }
   });
+});
 
+  // set myspeaker to first speaker whose id is "D0034B583A7A@Woonkamer"
+	// set thisSpeaker to {}
+	// set conn to connected of myspeaker
+	// copy conn to the end of thisSpeaker
+	// set volum to volume of myspeaker
+	// copy volum to the end of thisSpeaker
+	// set nm to name of myspeaker
+	// copy nm to the end of thisSpeaker
+	// set spkId to id of myspeaker
+	// copy spkId to the end of thisSpeaker
+	// set AppleScript's text item delimiters to ";"
+	// set speakerText to thisSpeaker as text
+
+app.get('/speaker/:id', function(req, res){
+  var script = "tell application \"Airfoil\"\n";
+  script += "set myspeaker to first speaker whose id is \"" + req.params.id + "\"\n";
+  script += "set thisSpeaker to {}\n";
+  script += "set conn to connected of myspeaker\n";
+  script += "copy conn to the end of thisSpeaker\n";
+  script += "set volum to volume of myspeaker\n";
+  script += "copy volum to the end of thisSpeaker\n";
+  script += "set nm to name of myspeaker\n";
+  script += "copy nm to the end of thisSpeaker\n";
+  script += "set spkId to id of myspeaker\n";
+  script += "copy spkId to the end of thisSpeaker\n";
+  script += "set AppleScript's text item delimiters to \";\"\n";
+  script += "set speakerText to thisSpeaker as text\n";
+  script += "end tell";
+
+  applescript.execString(script, function(error, result) {
+    if (error) {
+      res.json({error: error});
+    } else {
+      // var speakers = [];
+      // var speakerText = result.split("|");
+      // speakerText.map(function(s) {
+      //   var t = s.split(";");
+      //   speakers.push({ connected: t[0], volume: parseFloat(t[1].replace(",", ".")), name: t[2], id: t[3] });
+      // });
+      // res.json(speakers);
+      var t = result.split(";");
+      res.json({connected: t[0], volume: parseFloat(t[1].replace(",", ".")), name: t[2], id: t[3] });
+    }
+  });
 });
 
 app.post('/speakers/:id/connect', function (req, res) {
@@ -147,4 +192,4 @@ app.post('/appcontrol/:id', bodyParser.text({type: '*/*'}), function (req, res) 
   });
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8234);
