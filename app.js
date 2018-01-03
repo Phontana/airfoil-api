@@ -45,7 +45,7 @@ app.get('/speakers', function(req, res){
   });
 });
 
-app.get('/speaker/:id', function(req, res){
+app.get('/speakers/:id', function(req, res){
   var script = "tell application \"Airfoil\"\n";
   script += "set myspeaker to first speaker whose id is \"" + req.params.id + "\"\n";
   script += "set thisSpeaker to {}\n";
