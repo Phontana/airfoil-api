@@ -121,9 +121,9 @@ app.post('/speakers/:id/volume', bodyParser.text({type: '*/*'}), function (req, 
   });
 });
 
-app.post('/source/:id', function (req, res) {
+app.post('/source/:name', function (req, res) {
   var script = "tell application \"Airfoil\"\n";
-  script += "set current audio source to first device source whose name is \"" + req.params.id + "\"\n";
+  script += "set current audio source to first device source whose name is \"" + req.params.name + "\"\n";
   script += "end tell";
   applescript.execString(script, function(error, result) {
     if (error) {
@@ -168,6 +168,28 @@ app.post('/appcontrol/:id', bodyParser.text({type: '*/*'}), function (req, res) 
       res.json({error: error});
     } else {
       res.json({id: req.params.id})
+    }
+  });
+});
+
+app.get('/appsource', function(req, res){
+  var script = "tell application \"Airfoil\"\n";
+  script += "set currentAudioSource to current audio source\n";
+  script += "set audioSource to {}\n";
+  script += "set srcId to id of currentAudioSource\n";
+  script += "copy srcId to the end of audioSource\n";
+  script += "set nm to name of currentAudioSource\n";
+  script += "copy nm to the end of audioSource\n";
+  script += "set AppleScript's text item delimiters to \";\"\n";
+  script += "set audioSourceText to audioSource as text\n";
+  script += "end tell";
+
+  applescript.execString(script, function(error, result) {
+    if (error) {
+      res.json({error: error});
+    } else {
+      var t = result.split(";");
+      res.json({id: t[0], name: t[1]});
     }
   });
 });
